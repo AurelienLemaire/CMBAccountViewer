@@ -1,7 +1,7 @@
 <?php
 
 /**
- * 
+ * classe de gestion des operations bancaires
  */
 class ComptesCMBprocess{
 
