@@ -50,11 +50,14 @@ class ComptesCMBprocess{
         $db = new SQLite3( $this->_database );
         $cpt = 0;
 
+        $results = $db->query("delete from operations_tmp");
+
+
         if (($handle = fopen( $this->_inputFile , "r")) !== FALSE) {
             while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
                 try {
                     $opBancaire = new OperationBancaire($data);
-                    $query = $opBancaire->getInsertQuery("operations") . "\n";
+                    $query = $opBancaire->getInsertQuery("operations_tmp") . "\n";
                     $results = $db->query($query);
                     $cpt++;
                     if($this->_DBG) 
@@ -74,6 +77,22 @@ class ComptesCMBprocess{
 
         $db->close();
     }
+
+    /**
+     * 
+     */
+    public function commit(){
+        $db = new SQLite3( $this->_database );
+        
+        try {
+            $results = $db->query("insert into operations select * from operations_tmp");
+
+        } catch (Exception $e){}
+        
+        $this->_REPORT = "Monthly reports table filled";
+        $db->close();
+    }
+
 
     /**
      * 

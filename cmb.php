@@ -1,7 +1,7 @@
 <?php
 
-include "OperationBancaire.php";
-include "ComptesCMBprocess.php";
+include "classes/OperationBancaire.php";
+include "classes/ComptesCMBprocess.php";
 
 
 $processController = new ComptesCMBprocess("comptes", "comptes.csv");
@@ -12,6 +12,8 @@ $processController->dropData();
 $processController->printReport();
 $processController->insertOperationsIntoDb();
 $processController->printReport();
+$processController->commit();
+
 $processController->categorizeOperationsIntoDb();
 $processController->printReport();
 
