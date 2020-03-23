@@ -7,7 +7,7 @@ class ComptesCMBprocess{
 
     private $_database;
     private $_inputFile;
-    private $_categoriesFile = "categories_queries.sql";
+    private $_categoriesFile = "data/categories_queries.sql";
     private $_DBG = true;
     private $_REPORT;
 

@@ -4,7 +4,7 @@ include "classes/OperationBancaire.php";
 include "classes/ComptesCMBprocess.php";
 
 
-$processController = new ComptesCMBprocess("comptes", "comptes.csv");
+$processController = new ComptesCMBprocess("data/comptes", "data/comptes.csv");
 $processController->setDebug(false);
 
 
