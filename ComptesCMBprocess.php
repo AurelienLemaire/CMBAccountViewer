@@ -12,7 +12,7 @@ class ComptesCMBprocess{
     private $_REPORT;
 
     /**
-     * 
+     * constructeur
      */
 	public function __construct($db, $file){
         $this->_database = $db;
