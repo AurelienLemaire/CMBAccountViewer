@@ -5,6 +5,26 @@
  */
 class ComptesCMBprocess{
 
+
+    private static $_CREATE_TABLE_OPERATIONS_QUERY =
+        "CREATE TABLE operations (
+            date_operation	TEXT,
+            date_valeur	TEXT,
+            libelle	TEXT,
+            debit	REAL,
+            credit	REAL,
+            type	TEXT
+        )";
+
+    private static $_CREATE_TABLE_MONTHLY_REPORTS_QUERY =
+    "CREATE TABLE monthly_reports (
+        mois	TEXT,
+        type	TEXT,
+        debit	REAL,
+        credit	REAL
+    )";
+
+
     private $_database;
     private $_inputFile;
     private $_categoriesFile = "data/categories_queries.sql";
@@ -17,6 +37,23 @@ class ComptesCMBprocess{
 	public function __construct($db, $file){
         $this->_database = $db;
         $this->_inputFile = $file;
+    }
+
+    /**
+     * 
+     */
+    public function createDatabase(){
+        fopen($this->_database, 'w+');
+        $db = new SQLite3( $this->_database );
+        
+        try {
+            $results = $db->query( self::$_CREATE_TABLE_MONTHLY_REPORTS_QUERY );
+            $results = $db->query( self::$_CREATE_TABLE_OPERATIONS_QUERY );
+            $results = $db->query( "create table operations_tmp as select * from operations where false" );
+        } catch (Exception $e){}
+        
+        $this->_REPORT = "Database created";
+        $db->close();
     }
 
     /**
@@ -52,7 +89,6 @@ class ComptesCMBprocess{
 
         $results = $db->query("delete from operations_tmp");
 
-
         if (($handle = fopen( $this->_inputFile , "r")) !== FALSE) {
             while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
                 try {
@@ -68,12 +104,11 @@ class ComptesCMBprocess{
                         print_r ($data);
                     } 
                 }
-
             }
             fclose($handle);
         }
         
-        $this->_REPORT = $cpt . " lines inserted";
+        $this->_REPORT = $cpt . " operations inserted";
 
         $db->close();
     }
@@ -86,7 +121,6 @@ class ComptesCMBprocess{
         
         try {
             $results = $db->query("insert into operations select * from operations_tmp");
-
         } catch (Exception $e){}
         
         $this->_REPORT = "Monthly reports table filled";
@@ -119,7 +153,6 @@ class ComptesCMBprocess{
 
         $this->_REPORT = "Categories inserted";
 
-        
         $db->close();
     }
 
@@ -144,21 +177,21 @@ class ComptesCMBprocess{
 
 
 /*
-CREATE TABLE "operations" (
-	`date_operation`	TEXT,
-	`date_valeur`	TEXT,
-	`libelle`	TEXT,
-	`debit`	REAL,
-	`credit`	REAL,
-	`type`	TEXT
+CREATE TABLE operations (
+	date_operation	TEXT,
+	date_valeur	TEXT,
+	libelle	TEXT,
+	debit	REAL,
+	credit	REAL,
+	type	TEXT
 )
 
 
-CREATE TABLE "monthly_reports" (
-	"mois"	TEXT,
-	"type"	TEXT,
-	"debit"	REAL,
-	"credit"	REAL
+CREATE TABLE monthly_reports (
+	mois	TEXT,
+	type	TEXT,
+	debit	REAL,
+	credit	REAL
 )
 */
 
