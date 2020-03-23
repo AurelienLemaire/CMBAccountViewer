@@ -21,7 +21,7 @@ class ComptesCMBprocess{
 
     /**
      * 
-     */
+     */ 
     public function setDebug( $dbg ){
         $this->_DBG = $dbg;
     }
