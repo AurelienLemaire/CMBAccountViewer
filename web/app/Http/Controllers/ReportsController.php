@@ -1,9 +1,10 @@
 <?php
-
 namespace App\Http\Controllers;
+use App\Charts\SampleChart;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Operation;
+//use Charts;
 
 
 class ReportsController extends Controller
@@ -63,6 +64,34 @@ class ReportsController extends Controller
         return $this->displayListView( $reports );
     }
 
+   /**
+    * 
+    */
+    public function charts(){
+        $type = request( 'type' );
+        $month = request( 'month' );
+
+        $select = "1";
+        if( $type ) $select .= " AND type like '%$type%'";
+        if( $month ) $select .= " AND mois like '$month%'";
+
+        $reports = DB::table('monthly_reports')
+                            ->whereRaw( $select )
+                            ->selectRaw('mois, type, sum(debit) as debit, sum(credit) as credit')                            
+                            ->groupBy('mois');
+
+                           // $reports->pluck('mois')->dump();
+        $labels = $reports->pluck('mois');
+        $debits = $reports->pluck('debit');
+        $credits = $reports->pluck('credit');
+
+        $chart = new SampleChart;
+        $chart->labels($labels);
+        $chart->dataset('Debit', 'line', $debits)->options(['backgroundColor' => '#ff0000',  'fill'=>false]);
+        $chart->dataset('credit', 'line', $credits)->options(['backgroundColor' => '#00ff00', 'fill'=>false]);
+
+        return view('charts', ['chart' => $chart]);           
+    }
 
 
    /**

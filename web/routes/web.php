@@ -23,3 +23,5 @@ Route::get('/operationsByParams', 'OperationsController@listByParams');
 
 Route::get('/reports', 'ReportsController@index');
 Route::get('/reportsByParams', 'ReportsController@listByParams');
+
+Route::get('charts', 'ReportsController@charts');

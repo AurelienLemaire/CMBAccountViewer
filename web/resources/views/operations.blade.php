@@ -17,6 +17,8 @@
                 <div >
                     <a href="operations"><button>Opérations</button></a>
                     <a href="reports"><button>Rapports</button></a>
+                    <a href="charts"><button>Graphiques</button></a>
+
                 </div>
                 <hr/>
                 <h1>Détail des operations</h1>

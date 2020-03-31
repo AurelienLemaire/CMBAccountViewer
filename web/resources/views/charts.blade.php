@@ -21,13 +21,13 @@
 
                 </div>
                 <hr/>
-                <h1>Rapports mensuels</h1>
+                <h1>Graphiques</h1>
 
                 <div class="card text-white bg-dark">
                     <div class="row card-body">
                     <div class="col-9">
 
-                        <form method="get" action="reportsByParams">
+                        <form method="get" action="charts">
                             {{ csrf_field() }}
                             <div class="form-group">
                                 <input type="text" placeholder="Catégorie de l'opération" name="type" value="{{ request('type') }}"/>
@@ -47,29 +47,18 @@
 
                 <br/>
 
-                <table class="table table-striped table-hover">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th>Date</th>
-                            <th>Catégorie</th>
-                            <th>Débit</th>
-                            <th>Crédit</th>
-                        </tr>
-                    </thead>
-                    
-                    @foreach($reports as $report)
-                        <tr>
-                            <td>{{ $report->mois }}</td>
-                            <td>{{ $report->type }}</td>
-                            <td>{{ $report->debit }}</td>
-                            <td>{{ $report->credit }}</td>
-                        </tr>
-                    @endforeach
-                </table>
+                <div id="app">
+            {!! $chart->container() !!}
+        </div>               
+                  
 
-                <hr/>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" ></script>
 
-                {{ $reports->appends(request()->except('page'))->links() }}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js" charset="utf-8"></script>
+
+  
+        
+        {!! $chart->script() !!}
 
             </div>
         </body>
