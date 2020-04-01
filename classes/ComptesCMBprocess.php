@@ -24,6 +24,13 @@ class ComptesCMBprocess{
         credit	REAL
     )";
 
+    private static $_CREATE_TABLE_YEARLY_REPORTS_QUERY =
+    "CREATE TABLE yearly_reports (
+        annee	TEXT,
+        type	TEXT,
+        debit	REAL,
+        credit	REAL
+    )";
 
     private $_database;
     private $_inputFile;
@@ -47,6 +54,7 @@ class ComptesCMBprocess{
         $db = new SQLite3( $this->_database );
         
         try {
+            $results = $db->query( self::$_CREATE_TABLE_YEARLY_REPORTS_QUERY );
             $results = $db->query( self::$_CREATE_TABLE_MONTHLY_REPORTS_QUERY );
             $results = $db->query( self::$_CREATE_TABLE_OPERATIONS_QUERY );
             $results = $db->query( "create table operations_tmp as select * from operations where false" );
@@ -123,7 +131,7 @@ class ComptesCMBprocess{
             $results = $db->query("insert into operations select * from operations_tmp");
         } catch (Exception $e){}
         
-        $this->_REPORT = "Monthly reports table filled";
+        $this->_REPORT = "operations table filled";
         $db->close();
     }
 
@@ -160,16 +168,18 @@ class ComptesCMBprocess{
     /**
      * 
      */
-    public function buildMonthlyReports(){
+    public function buildReports(){
         $db = new SQLite3( $this->_database );
         
         try {
             $results = $db->query("delete from monthly_reports");
             $results = $db->query("insert into monthly_reports select STRFTIME('%Y-%m', date_operation), type, sum(debit), sum(credit) from operations group by STRFTIME('%Y-%m', date_operation), type");
+            $results = $db->query("delete from yearly_reports");
+            $results = $db->query("insert into yearly_reports select STRFTIME('%Y', date_operation), type, sum(debit), sum(credit) from operations group by STRFTIME('%Y', date_operation), type");
 
         } catch (Exception $e){}
         
-        $this->_REPORT = "Monthly reports table filled";
+        $this->_REPORT = "Reports table filled";
         $db->close();
     }
 

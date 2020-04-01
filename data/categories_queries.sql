@@ -11,6 +11,8 @@ update operations set type = 'COURSES' WHERE libelle like '%BIOCOO%' ;
 update operations set type = 'COURSES' WHERE libelle like '%NOZ%' ;
 update operations set type = 'COURSES' WHERE libelle like '%BELASIE%' ;
 update operations set type = 'COURSES' WHERE libelle like '%OLIVIERS & CO%' ;
+update operations set type = 'COURSES' WHERE libelle like '%CAVE DES TUILL%' ;
+
 
 update operations set type = 'EATY' WHERE libelle like '%EATY%' ;
 update operations set type = 'RESTAU' WHERE libelle like '%VILLA MODENA%'; 
