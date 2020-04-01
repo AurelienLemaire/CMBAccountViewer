@@ -34,7 +34,7 @@ class ReportsController extends Controller
     public function listByMonth(){
         $month = request( 'month' );
         $reports = DB::table('monthly_reports')
-                            ->whereRaw('mois like ?', $month.'%');
+                            ->whereRaw('period like ?', $month.'%');
         return $this->displayListView( $reports );
     }
 
@@ -57,7 +57,7 @@ class ReportsController extends Controller
 
         $select = "1";
         if( $type ) $select .= " AND type = '$type'";
-        if( $month ) $select .= " AND mois like '$month%'";
+        if( $month ) $select .= " AND period like '$month%'";
 
         $reports = DB::table('monthly_reports')
                             ->whereRaw( $select );
@@ -73,12 +73,12 @@ class ReportsController extends Controller
 
         $select = "1";
         if( $type ) $select .= " AND type like '%$type%'";
-        if( $month ) $select .= " AND mois like '$month%'";
+        if( $month ) $select .= " AND period like '$month%'";
 
         $reports = DB::table('monthly_reports')
                             ->whereRaw( $select )
-                            ->selectRaw('mois, type, sum(debit) as debit, sum(credit) as credit')                            
-                            ->groupBy('mois');
+                            ->selectRaw('period, type, sum(debit) as debit, sum(credit) as credit, sum(credit-debit) as balance')                            
+                            ->groupBy('period');
 
         return $this->displayChartView( $reports );
         
@@ -93,23 +93,15 @@ class ReportsController extends Controller
 
         $select = "1";
         if( $type ) $select .= " AND type like '%$type%'";
-        if( $month ) $select .= " AND annnee like '$month%'";
+        if( $month ) $select .= " AND period like '$month%'";
 
         $reports = DB::table('yearly_reports')
                             ->whereRaw( $select )
-                            ->selectRaw("annee, type, sum(debit) as debit, sum(credit) as credit")                            
-                            ->groupByRaw("annee");
+                            ->selectRaw("period, type, sum(debit) as debit, sum(credit) as credit, sum(credit-debit) as balance")                            
+                            ->groupByRaw("period");
 
-        $labels = $reports->pluck('annee');
-        $debits = $reports->pluck('debit');
-        $credits = $reports->pluck('credit');
-
-        $chart = new SampleChart;
-        $chart->labels($labels);
-        $chart->dataset('Debit', 'line', $debits)->options(['backgroundColor' => '#ff0000',  'fill'=>false]);
-        $chart->dataset('credit', 'line', $credits)->options(['backgroundColor' => '#00ff00', 'fill'=>false]);
-
-        return view('charts', ['chart' => $chart]);            
+        return $this->displayChartView( $reports );
+         
     }
 
 
@@ -119,17 +111,19 @@ class ReportsController extends Controller
 
         $select = "1";
         if( $type ) $select .= " AND type like '%$type%'";
-        if( $month ) $select .= " AND mois like '$month%'";
+        if( $month ) $select .= " AND period like '$month%'";
 
         $reports = DB::table('monthly_reports')
                             ->whereRaw( $select )
-                            ->selectRaw('mois, type, sum(debit) as debit, sum(credit) as credit')                            
+                            ->selectRaw('period, type, sum(debit) as debit, sum(credit) as credit')                            
                             ->groupBy('type')
                             ->orderBy('debit');
 
                            // $reports->pluck('mois')->dump();
         $labels = $reports->pluck('type');
         $debits = $reports->pluck('debit');
+        $balance = $reports->pluck('balance');
+       
        // $credits = $reports->pluck('credit');
 
         $chart = new SampleChart;
@@ -153,14 +147,16 @@ class ReportsController extends Controller
     * 
     */
    public function displayChartView( $reports ){
-        $labels = $reports->pluck('mois');
+        $labels = $reports->pluck('period');
         $debits = $reports->pluck('debit');
         $credits = $reports->pluck('credit');
+        $balance = $reports->pluck('balance');
 
         $chart = new SampleChart;
         $chart->labels($labels);
         $chart->dataset('Debit', 'line', $debits)->options(['backgroundColor' => '#ff0000',  'fill'=>false]);
         $chart->dataset('credit', 'line', $credits)->options(['backgroundColor' => '#00ff00', 'fill'=>false]);
+        $chart->dataset('balance', 'line', $balance)->options(['backgroundColor' => '#333333', 'fill'=>false]);
 
         return view('charts', ['chart' => $chart]);   
    }

@@ -59,7 +59,7 @@
                     
                     @foreach($reports as $report)
                         <tr>
-                            <td>{{ $report->mois }}</td>
+                            <td>{{ $report->period }}</td>
                             <td>{{ $report->type }}</td>
                             <td>{{ $report->debit }}</td>
                             <td>{{ $report->credit }}</td>

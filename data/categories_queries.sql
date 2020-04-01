@@ -14,16 +14,18 @@ update operations set type = 'COURSES' WHERE libelle like '%OLIVIERS & CO%' ;
 update operations set type = 'COURSES' WHERE libelle like '%CAVE DES TUILL%' ;
 
 
+update operations set type = 'FRAIS BOULOT' WHERE libelle like '%ANGELLO%'; 
+update operations set type = 'FRAIS BOULOT' WHERE libelle like '%LE LOFT BY VILL%'; 
+
 update operations set type = 'EATY' WHERE libelle like '%EATY%' ;
+update operations set type = 'RESTAU' WHERE libelle like '%2JL RENNES%'; 
 update operations set type = 'RESTAU' WHERE libelle like '%VILLA MODENA%'; 
-update operations set type = 'RESTAU' WHERE libelle like '%LE LOFT BY VILL%'; 
 update operations set type = 'RESTAU' WHERE libelle like '%ALGORYTHME%';
 update operations set type = 'RESTAU' WHERE libelle like '%CINQUECENTO%'; 
 update operations set type = 'RESTAU' WHERE libelle like '%TABLE LIBANAISE%'; 
 update operations set type = 'RESTAU' WHERE libelle like '%LUCKY STAR%'; 
 update operations set type = 'RESTAU' WHERE libelle like '%LE PETIT HANOI%'; 
 update operations set type = 'RESTAU' WHERE libelle like '%CAFE CORTINA%'; 
-update operations set type = 'RESTAU' WHERE libelle like '%ANGELLO%'; 
 update operations set type = 'RESTAU' WHERE libelle like '%CAFE POP%';
 update operations set type = 'RESTAU' WHERE libelle like '%PIMPRENELLE%';
 update operations set type = 'RESTAU' WHERE libelle like '%LOCO LOCA%';
@@ -78,6 +80,9 @@ update operations set type = 'RESTAU' WHERE libelle like '%COT& BOEUF%';
 update operations set type = 'RESTAU' WHERE libelle like '%CONVIVIA%';
 update operations set type = 'RESTAU' WHERE libelle like '%OAN S PUB%';
 update operations set type = 'RESTAU' WHERE libelle like '%EKINAT%';
+update operations set type = 'RESTAU' WHERE libelle like '%OKAWA%';
+update operations set type = 'RESTAU' WHERE libelle like '%BRICOLES RENNES%';
+update operations set type = 'RESTAU' WHERE libelle like '%BAKKHOS%';
 
 
 update operations set type = 'POCHE' WHERE libelle like '%RET DAB%'; 
@@ -88,7 +93,7 @@ update operations set type = 'SALAIRE' WHERE libelle like '%UBIFLOW%';
 update operations set type = 'SALAIRE' WHERE libelle like '%ALYOTECH%'; 
 update operations set type = 'SALAIRE' WHERE libelle like '%ALOTECH%'; 
 update operations set type = 'SALAIRE' WHERE libelle like '%EPITECH%' and credit+0 > 2500; 
-update operations set type = 'FRAIS EPITECH' WHERE libelle like '%EPITECH%' and credit+0 < 2500; 
+update operations set type = 'FRAIS BOULOT' WHERE libelle like '%EPITECH%' and credit+0 < 2500; 
 update operations set type = 'SALAIRE' WHERE libelle like '%VIR POLE EMPLOI%'; 
 update operations set type = 'SALAIRE' WHERE libelle like '%REM 1 CHQ BORNE RENNES SUD%' and date_operation = '2011-03-14'; 
 
@@ -194,6 +199,8 @@ update operations set type = 'ACHATS TECHNO' WHERE libelle like '%SATURN%' ;
 update operations set type = 'ACHATS TECHNO' WHERE libelle like '%DARTY%' ;
 update operations set type = 'ACHATS TECHNO' WHERE libelle like '%FNAC%' ;
 update operations set type = 'ACHATS' WHERE libelle like '%AMAZON%' ;
+update operations set type = 'ACHATS' WHERE libelle like '%CDISCOUNT%' ;
+
 update operations set type = 'ACHATS' WHERE libelle like '%ARTISANS MONDE%' ;
 
 update operations set type = 'ACHATS SANTE' WHERE libelle like '%pha%' ;

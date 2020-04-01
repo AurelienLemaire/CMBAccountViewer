@@ -18,7 +18,7 @@ class ComptesCMBprocess{
 
     private static $_CREATE_TABLE_MONTHLY_REPORTS_QUERY =
     "CREATE TABLE monthly_reports (
-        mois	TEXT,
+        period	TEXT,
         type	TEXT,
         debit	REAL,
         credit	REAL
@@ -26,7 +26,7 @@ class ComptesCMBprocess{
 
     private static $_CREATE_TABLE_YEARLY_REPORTS_QUERY =
     "CREATE TABLE yearly_reports (
-        annee	TEXT,
+        period	TEXT,
         type	TEXT,
         debit	REAL,
         credit	REAL

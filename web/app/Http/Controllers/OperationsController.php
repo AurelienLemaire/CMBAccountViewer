@@ -59,7 +59,8 @@ class OperationsController extends Controller
         if( $month ) $select .= " AND date_operation like '$month%'";
 
         $operations = DB::table('operations')
-                            ->whereRaw( $select );
+                            ->whereRaw( $select )
+                            ->orderBy('date_operation', 'desc');
         return $this->displayListView( $operations );
     }
 
