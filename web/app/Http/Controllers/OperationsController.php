@@ -53,10 +53,12 @@ class OperationsController extends Controller
     public function listByParams(){
         $type = request( 'type' );
         $month = request( 'month' );
+        $libelle = request( 'libelle' );
 
         $select = "1";
         if( $type ) $select .= " AND type = '$type'";
         if( $month ) $select .= " AND date_operation like '$month%'";
+        if( $libelle ) $select .= " AND libelle like '%$libelle%'";
 
         $operations = DB::table('operations')
                             ->whereRaw( $select )

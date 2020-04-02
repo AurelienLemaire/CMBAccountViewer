@@ -24,23 +24,33 @@
 
                 <div class="card text-white bg-dark">
                     <div class="row card-body">
-                    <div class="col-9">
+                        <div class="col-9">
 
-                        <form method="get" action="operationsByParams">
-                            {{ csrf_field() }}
-                            <div class="form-group">
-                                <input type="text" placeholder="Catégorie de l'opération" name="type" value="{{ request('type') }}"/>
-                            </div>
-                            <div class="form-group">
-                                <input type="text" placeholder="&#128197; Mois (YYYY-MM)" name="month" value="{{ request('month') }}"/>
-                            </div>
-                            
-                            <button type="submit"  class="btn btn-secondary">OK</button>
-                        </form>
+                                <form method="get" action="operationsByParams">
+                                    {{ csrf_field() }}
+                                    <div class="row">
 
+                                    <div class="col-4">
+
+                                        <div class="form-group">
+                                            <input type="text" placeholder="Catégorie de l'opération" name="type" value="{{ request('type') }}"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" placeholder="&#128197; Mois (YYYY-MM)" name="month" value="{{ request('month') }}"/>
+                                        </div>
+                                        <button type="submit"  class="btn btn-secondary">OK</button>
+                                    </div>                                
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <input type="text" placeholder="%Libellé%" name="libelle" value="{{ request('libelle') }}"/>
+                                        </div>
+                                    </div>
+                                    </div>
+                                        
+                                </form>
                         </div>
 
-                        <div class="col" style="border-left:1px solid #fff">
+                        <div class="col-3" style="border-left:1px solid #fff">
                             <table style="font-size:150%;text-align:right;">
                             <tr><td>Débit : </td><td>-{{ $total_debit }} €</td><tr>
                             <tr><td>Crédit : </td><td>+{{ $total_credit }} €</td><tr>
