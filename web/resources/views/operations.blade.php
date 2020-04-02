@@ -18,7 +18,6 @@
                     <a href="operations"><button>Opérations</button></a>
                     <a href="reports"><button>Rapports</button></a>
                     <a href="charts"><button>Graphiques</button></a>
-
                 </div>
                 <hr/>
                 <h1>Détail des operations</h1>
@@ -33,7 +32,7 @@
                                 <input type="text" placeholder="Catégorie de l'opération" name="type" value="{{ request('type') }}"/>
                             </div>
                             <div class="form-group">
-                                <input type="text" placeholder="Mois (YYYY-MM)" name="month" value="{{ request('month') }}"/>
+                                <input type="text" placeholder="&#128197; Mois (YYYY-MM)" name="month" value="{{ request('month') }}"/>
                             </div>
                             
                             <button type="submit"  class="btn btn-secondary">OK</button>

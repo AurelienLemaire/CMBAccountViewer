@@ -77,11 +77,20 @@ class ReportsController extends Controller
 
         $reports = DB::table('monthly_reports')
                             ->whereRaw( $select )
-                            ->selectRaw('period, type, sum(debit) as debit, sum(credit) as credit, sum(credit-debit) as balance')                            
+                            ->selectRaw('period, type, sum(ifnull(debit,0)) as debit, sum(ifnull(credit,0)) as credit, sum(0+ifnull(credit,0)-ifnull(debit,0)) as balance')                            
                             ->groupBy('period');
 
         return $this->displayChartView( $reports );
         
+    }
+
+
+    public function charts(){
+        $monthly = request( 'monthly' );
+        if( $monthly ){
+            return $this->chartsByMonth();
+        }
+        return $this->chartsByYear();
     }
 
    /**
@@ -97,7 +106,7 @@ class ReportsController extends Controller
 
         $reports = DB::table('yearly_reports')
                             ->whereRaw( $select )
-                            ->selectRaw("period, type, sum(debit) as debit, sum(credit) as credit, sum(credit-debit) as balance")                            
+                            ->selectRaw("period, type, sum(ifnull(debit,0)) as debit, sum(ifnull(credit,0)) as credit, sum(0+ifnull(credit,0)-ifnull(debit,0)) as balance")                            
                             ->groupByRaw("period");
 
         return $this->displayChartView( $reports );
@@ -147,6 +156,9 @@ class ReportsController extends Controller
     * 
     */
    public function displayChartView( $reports ){
+        $monthly = request( 'monthly' );
+
+
         $labels = $reports->pluck('period');
         $debits = $reports->pluck('debit');
         $credits = $reports->pluck('credit');
@@ -158,7 +170,7 @@ class ReportsController extends Controller
         $chart->dataset('credit', 'line', $credits)->options(['backgroundColor' => '#00ff00', 'fill'=>false]);
         $chart->dataset('balance', 'line', $balance)->options(['backgroundColor' => '#333333', 'fill'=>false]);
 
-        return view('charts', ['chart' => $chart]);   
+        return view('charts', ['chart' => $chart, "monthly" => $monthly ? "checked" : ""]);   
    }
 
    /**

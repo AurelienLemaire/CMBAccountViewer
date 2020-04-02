@@ -33,7 +33,7 @@
                                 <input type="text" placeholder="Catégorie de l'opération" name="type" value="{{ request('type') }}"/>
                             </div>
                             <div class="form-group">
-                                <input type="text" placeholder="Mois (YYYY-MM)" name="month" value="{{ request('month') }}"/>
+                                <input type="text" placeholder="&#128197; Mois (YYYY-MM)" name="month" value="{{ request('month') }}"/>
                             </div>
                             
                             <button type="submit"  class="btn btn-secondary">OK</button>

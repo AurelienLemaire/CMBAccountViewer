@@ -30,10 +30,13 @@
                         <form method="get" action="charts">
                             {{ csrf_field() }}
                             <div class="form-group">
-                                <input type="text" placeholder="Catégorie de l'opération" name="type" value="{{ request('type') }}"/>
+                            <input type="text" placeholder="Catégorie de l'opération" name="type" value="{{ request('type') }}"/>
                             </div>
                             <div class="form-group">
-                                <input type="text" placeholder="Mois (YYYY-MM)" name="month" value="{{ request('month') }}"/>
+                                 <input type="text" placeholder="&#128197; Mois (YYYY-MM)" name="month" value="{{ request('month') }}"/>
+                            </div>
+                            <div class="form-group">
+                                <input type="checkbox"  name="monthly" {{ $monthly }}/> <label for="monthly">Graphes mensuels</label>
                             </div>
                             
                             <button type="submit"  class="btn btn-secondary">OK</button>
