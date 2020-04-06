@@ -40,7 +40,7 @@
                                         </div>
                                         <button type="submit"  class="btn btn-secondary">OK</button>
                                     </div>                                
-                                    <div class="col-4">
+                                    <div class="col-4gi">
                                         <div class="form-group">
                                             <input type="text" placeholder="%Libellé%" name="libelle" value="{{ request('libelle') }}"/>
                                         </div>
